@@ -1,0 +1,52 @@
+ОТЧЁТ О ПРОЦЕССАХ
+
+Хост     : satan
+Время    : 2026-11-13 11:54:35
+
+Статистика процессов
+  Всего процессов : 161
+  Запущенных (R)  : 1
+  Спящих (S)      : 110
+  Зомби (Z)       : 0
+
+Топ-10 процессов по cpu
+PID      USER         %CPU   %MEM STAT   COMMAND
+1241     demon         5.6    5.9 Ssl    firefox
+707      root          2.0    1.7 Ssl+   Xorg
+1872     demon         1.9    2.5 Sl     Isolated
+22       root          1.6    0.0 S      migration/1
+28       root          1.6    0.0 S      migration/2
+1108     demon         1.4    0.3 Sl     pulseaudio
+1196     demon         1.0    0.8 Ssl    fly-term
+937      demon         0.3    0.4 Ss     fly-wm
+29       root          0.1    0.0 S      ksoftirqd/2
+189      root          0.1    0.0 I      kworker/2:2-events
+
+Зомби-процессы
+  Зомби-процессов не обнаружено.
+
+Процесс с наибольшим потреблением памяти
+  PID=1241     USER=demon      %MEM=5.9    firefox
+
+Дерево процессов (pstree -p, первые 20 строк)
+systemd(1)-+-NetworkManager(489)-+-{NetworkManager}(581)
+           |                     `-{NetworkManager}(586)
+           |-agetty(709)
+           |-astra-event-dia(837)
+           |-at-spi2-registr(1128)-+-{at-spi2-registr}(1141)
+           |                       `-{at-spi2-registr}(1142)
+           |-auditd(312)---{auditd}(313)
+           |-avahi-daemon(486)---avahi-daemon(497)
+           |-cron(485)
+           |-cupsd(589)
+           |-dbus-daemon(488)
+           |-dbus-daemon(867)
+           |-dbus-daemon(1016)
+           |-dbus-launch(866)
+           |-dbus-launch(1015)
+           |-fly-dm(647)-+-Xorg(707)---{Xorg}(818)
+           |             `-fly-dm(852)---fly-wm(937)-+-astra-event-wat(1080)---{astra-event-wat}(1098)
+           |                                         |-at-spi-bus-laun(1068)-+-dbus-daemon(1087)
+           |                                         |                       |-{at-spi-bus-laun}(1073)
+           |                                         |                       |-{at-spi-bus-laun}(1077)
+
