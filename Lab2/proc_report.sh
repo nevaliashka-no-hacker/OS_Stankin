@@ -94,7 +94,7 @@ esac
     fi
     echo ""
 
-    # Блок 4: процесс с максимальным %MEM 
+    # Блок 4: процесс с максимальным %MEM
     echo "[САМЫЙ РЕСУРСОЕМКИЙ ПРОЦЕСС]"
     mem_leader=$(ps -eo pid,user,pmem,comm --sort=-pmem --no-headers | head -n 1)
     if [[ -n "$mem_leader" ]]; then

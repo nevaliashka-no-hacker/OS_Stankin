@@ -1,52 +1,52 @@
-ОТЧЁТ О ПРОЦЕССАХ
+==================================================
+  ОТЧЁТ О ПРОЦЕССАХ
+  Хост: satan   Время: 2026-11-13 12:37:57
+==================================================
 
-Хост     : satan
-Время    : 2026-11-13 11:54:35
+[ОБЩАЯ СТАТИСТИКА]
+  Всего процессов : 175
+  Running (R)     : 1
+  Sleeping (S)    : 110
+  Zombie (Z)      : 0
 
-Статистика процессов
-  Всего процессов : 161
-  Запущенных (R)  : 1
-  Спящих (S)      : 110
-  Зомби (Z)       : 0
+[ТОП-10 ПО CPU]
+  PID      USER         %CPU   %MEM STAT   COMMAND
+  1539     demon         9.6    5.0 Ssl    firefox
+  28       root          8.4    0.0 S      migration/2
+  22       root          8.3    0.0 S      migration/1
+  1799     demon         5.8    3.6 Sl     Isolated
+  745      root          3.1    1.5 Ssl+   Xorg
+  1737     demon         0.9    1.9 Sl     Isolated
+  9        root          0.8    0.0 I      kworker/u6:0-events_unbound
+  945      demon         0.6    0.4 Ss     fly-wm
+  1968     root          0.6    0.1 T      cdrom
+  1684     demon         0.5    1.6 Sl     Isolated
 
-Топ-10 процессов по cpu
-PID      USER         %CPU   %MEM STAT   COMMAND
-1241     demon         5.6    5.9 Ssl    firefox
-707      root          2.0    1.7 Ssl+   Xorg
-1872     demon         1.9    2.5 Sl     Isolated
-22       root          1.6    0.0 S      migration/1
-28       root          1.6    0.0 S      migration/2
-1108     demon         1.4    0.3 Sl     pulseaudio
-1196     demon         1.0    0.8 Ssl    fly-term
-937      demon         0.3    0.4 Ss     fly-wm
-29       root          0.1    0.0 S      ksoftirqd/2
-189      root          0.1    0.0 I      kworker/2:2-events
+[ЗОМБИ-ПРОЦЕССЫ]
+  Не обнаружено.
 
-Зомби-процессы
-  Зомби-процессов не обнаружено.
+[САМЫЙ РЕСУРСОЕМКИЙ ПРОЦЕСС]
+  PID 1539 (firefox) — 5.0% MEM
 
-Процесс с наибольшим потреблением памяти
-  PID=1241     USER=demon      %MEM=5.9    firefox
-
-Дерево процессов (pstree -p, первые 20 строк)
-systemd(1)-+-NetworkManager(489)-+-{NetworkManager}(581)
-           |                     `-{NetworkManager}(586)
-           |-agetty(709)
-           |-astra-event-dia(837)
-           |-at-spi2-registr(1128)-+-{at-spi2-registr}(1141)
-           |                       `-{at-spi2-registr}(1142)
-           |-auditd(312)---{auditd}(313)
-           |-avahi-daemon(486)---avahi-daemon(497)
-           |-cron(485)
-           |-cupsd(589)
-           |-dbus-daemon(488)
-           |-dbus-daemon(867)
-           |-dbus-daemon(1016)
-           |-dbus-launch(866)
-           |-dbus-launch(1015)
-           |-fly-dm(647)-+-Xorg(707)---{Xorg}(818)
-           |             `-fly-dm(852)---fly-wm(937)-+-astra-event-wat(1080)---{astra-event-wat}(1098)
-           |                                         |-at-spi-bus-laun(1068)-+-dbus-daemon(1087)
-           |                                         |                       |-{at-spi-bus-laun}(1073)
-           |                                         |                       |-{at-spi-bus-laun}(1077)
+[ДЕРЕВО ПРОЦЕССОВ]
+  systemd(1)-+-NetworkManager(485)-+-{NetworkManager}(527)
+             |                     `-{NetworkManager}(529)
+             |-agetty(744)
+             |-anacron(486)
+             |-astra-event-dia(923)
+             |-at-spi2-registr(1140)-+-{at-spi2-registr}(1149)
+             |                       `-{at-spi2-registr}(1150)
+             |-auditd(311)---{auditd}(312)
+             |-avahi-daemon(492)---avahi-daemon(504)
+             |-cron(490)
+             |-cupsd(603)
+             |-dbus-daemon(483)
+             |-dbus-daemon(856)
+             |-dbus-daemon(1026)
+             |-dbus-launch(855)
+             |-dbus-launch(1025)
+             |-fly-dm(663)-+-Xorg(745)---{Xorg}(840)
+             |             `-fly-dm(841)---fly-wm(945)-+-astra-event-wat(1102)---{astra-event-wat}(1116)
+             |                                         |-at-spi-bus-laun(1091)-+-dbus-daemon(1105)
+             |                                         |                       |-{at-spi-bus-laun}(1098)
 
