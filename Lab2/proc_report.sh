@@ -98,7 +98,6 @@ esac
     echo "[САМЫЙ РЕСУРСОЕМКИЙ ПРОЦЕСС]"
     mem_leader=$(ps -eo pid,user,pmem,comm --sort=-pmem --no-headers | head -n 1)
     if [[ -n "$mem_leader" ]]; then
-        # "%%MEM" в printf печатает литеральный "%MEM".
         echo "$mem_leader" | awk '{printf "  PID %s (%s) — %s%% MEM\n", $1, $4, $3}'
     else
         echo "  Не удалось определить."
