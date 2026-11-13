@@ -44,11 +44,10 @@ esac
 
 {
     # Блок 1: общая статистика
-    echo "ОТЧЁТ О ПРОЦЕССАХ"
-    echo ""
-
-    echo "Хост     : $(hostname)"
-    echo "Время    : $(date '+%Y-%m-%d %H:%M:%S')"
+    echo "=================================================="
+    echo "  ОТЧЁТ О ПРОЦЕССАХ"
+    echo "  Хост: $(hostname)   Время: $(date '+%Y-%m-%d %H:%M:%S')"
+    echo "=================================================="
     echo ""
 
     total=$(ps -e --no-headers | wc -l)
@@ -57,11 +56,11 @@ esac
     sleeping=$(ps -eo stat --no-headers | awk '$1 ~ /^S/ {n++} END {print n+0}')
     zombies=$(ps -eo stat --no-headers  | awk '$1 ~ /^Z/ {n++} END {print n+0}')
 
-    echo "Статистика процессов"
+    echo "[ОБЩАЯ СТАТИСТИКА]"
     printf "  Всего процессов : %d\n" "$total"
-    printf "  Запущенных (R)  : %d\n" "$running"
-    printf "  Спящих (S)      : %d\n" "$sleeping"
-    printf "  Зомби (Z)       : %d\n" "$zombies"
+    printf "  Running (R)     : %d\n" "$running"
+    printf "  Sleeping (S)    : %d\n" "$sleeping"
+    printf "  Zombie (Z)      : %d\n" "$zombies"
     echo ""
 
     # Блок 2: топ-N процессов
@@ -71,21 +70,22 @@ esac
         pid) sort_opt="pid"  ;;
     esac
 
-    echo "Топ-$count процессов по $sort_by"
-    printf "%-8s %-10s %6s %6s %-6s %s\n" \
+    sort_label=$(echo "$sort_by" | tr '[:lower:]' '[:upper:]')
+    echo "[ТОП-$count ПО $sort_label]"
+    printf "  %-8s %-10s %6s %6s %-6s %s\n" \
            "PID" "USER" "%CPU" "%MEM" "STAT" "COMMAND"
 
     ps -eo pid,user,pcpu,pmem,stat,comm --sort="$sort_opt" \
         | head -n $((count + 1)) \
         | tail -n +2 \
-        | awk '{printf "%-8s %-10s %6s %6s %-6s %s\n", $1, $2, $3, $4, $5, $6}'
+        | awk '{printf "  %-8s %-10s %6s %6s %-6s %s\n", $1, $2, $3, $4, $5, $6}'
     echo ""
 
     # Блок 3: зомби-процессы
-    echo "Зомби-процессы"
+    echo "[ЗОМБИ-ПРОЦЕССЫ]"
     zombie_list=$(ps -eo pid,ppid,stat,comm --no-headers | awk '$3 ~ /^Z/')
     if [[ -z "$zombie_list" ]]; then
-        echo "  Зомби-процессов не обнаружено."
+        echo "  Не обнаружено."
     else
         echo "  Обнаружены зомби (PID, PPID, STAT, COMMAND):"
         echo "$zombie_list" | awk '{printf "  PID=%-8s PPID=%-8s STAT=%-4s %s\n", $1, $2, $3, $4}'
@@ -95,20 +95,20 @@ esac
     echo ""
 
     # Блок 4: процесс с максимальным %MEM 
-    echo "Процесс с наибольшим потреблением памяти"
+    echo "[САМЫЙ РЕСУРСОЕМКИЙ ПРОЦЕСС]"
     mem_leader=$(ps -eo pid,user,pmem,comm --sort=-pmem --no-headers | head -n 1)
     if [[ -n "$mem_leader" ]]; then
         # "%%MEM" в printf печатает литеральный "%MEM".
-        echo "$mem_leader" | awk '{printf "  PID=%-8s USER=%-10s %%MEM=%-6s %s\n", $1, $2, $3, $4}'
+        echo "$mem_leader" | awk '{printf "  PID %s (%s) — %s%% MEM\n", $1, $4, $3}'
     else
         echo "  Не удалось определить."
     fi
     echo ""
 
     # Блок 5: дерево процессов
-    echo "Дерево процессов (pstree -p, первые 20 строк)"
+    echo "[ДЕРЕВО ПРОЦЕССОВ]"
     if command -v pstree >/dev/null 2>&1; then
-        pstree -p | head -n 20
+        pstree -p | head -n 20 | sed 's/^/  /'
     else
         echo "  ВНИМАНИЕ: утилита pstree не установлена."
         echo "  Установите пакет psmisc (например: sudo apt install psmisc)."
